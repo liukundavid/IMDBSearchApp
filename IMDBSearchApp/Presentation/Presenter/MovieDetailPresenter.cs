@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Net.Http;
 using IMDBSearchApp.Domain;
 using IMDBSearchApp.Domain.Model;
@@ -7,22 +6,22 @@ using IMDBSearchApp.Domain.UseCase;
 
 namespace IMDBSearchApp.Presentation.Presenter
 {
-    public class MoviePresenter
+    public class MovieDetailPresenter
     {
-        public BaseView<List<MovieSummary>> View { get; set; }
+        public BaseView<Movie> View { get; set; }
 
-        SearchMoviesUseCase searchMoviesUseCase = new SearchMoviesUseCase();
+        GetMovieDetailUseCase getMovieDetailUseCase = new GetMovieDetailUseCase();
 
-        public void SearchMovie(string keyword)
+        public void GetMovieDetail(string imdbId)
         {
-            searchMoviesUseCase.Execute(new SearchMovieObserver { Presenter = this }, keyword);
+            getMovieDetailUseCase.Execute(new GetMovieDetailObserver { Presenter = this }, imdbId);
 
             View.OnLoadingStart();
         }
 
-        class SearchMovieObserver : DefaultObserver<List<MovieSummary>>
+        class GetMovieDetailObserver : DefaultObserver<Movie>
         {
-            public MoviePresenter Presenter { get; set; }
+            public MovieDetailPresenter Presenter { get; set; }
 
             public override void OnCompleted()
             {
@@ -42,7 +41,7 @@ namespace IMDBSearchApp.Presentation.Presenter
                 }
             }
 
-            public override void OnNext(List<MovieSummary> value)
+            public override void OnNext(Movie value)
             {
                 base.OnNext(value);
                 Presenter.View.Render(value);

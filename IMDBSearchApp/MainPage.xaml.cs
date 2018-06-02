@@ -10,16 +10,19 @@ using Xamarin.Forms;
 
 namespace IMDBSearchApp
 {
-    public partial class MainPage : ContentPage, BaseView<List<MovieSummary>>
+    public partial class MainPage : ContentPage, BaseView<Movie>
     {
-        MoviePresenter Presenter;
+        //MovieSearchPresenter Presenter;
+        MovieDetailPresenter Presenter;
 
         public MainPage()
         {
             InitializeComponent();
 
-            Presenter = new MoviePresenter { View = this };
-            Presenter.SearchMovie("Avengers");
+            //Presenter = new MovieSearchPresenter { View = this };
+            //Presenter.SearchMovie("Avengers");
+            Presenter = new MovieDetailPresenter { View = this };
+            Presenter.GetMovieDetail("tt0848228");
         }
 
         public void OnLoadingStart()
@@ -32,7 +35,7 @@ namespace IMDBSearchApp
             
         }
 
-        public void Render(List<MovieSummary> data)
+        public void Render(Movie data)
         {
             
         }

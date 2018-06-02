@@ -47,8 +47,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Domain\UseCase\BaseUseCase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Domain\UseCase\SearchMoviesUseCase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Domain\UseCase\GetMovieDetailUseCase.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Presentation\Presenter\MoviePresenter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Presentation\Presenter\MovieSearchPresenter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Presentation\BaseView.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Presentation\Presenter\MovieDetailPresenter.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Data\" />

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>{6CD6B0E5-7DD5-49B1-8D17-AAA19A33C052}</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>IMDBSearchApp</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)App.xaml" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)MainPage.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)MainPage.xaml.cs">
+      <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Data\Entity\MovieEntity.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Data\Entity\RatingEntity.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Data\Entity\Mapper\BaseMapper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Data\Entity\Mapper\RatingMapper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Domain\Model\Rating.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Data\Entity\Mapper\MovieMapper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Domain\Model\Movie.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Data\Cache\MovieCache.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Data\Cache\IMovieCache.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Data\Cache\IDBPathHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Data\Cache\Serializer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Data\Net\IMDBApiConnection.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Domain\Model\MovieSummary.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Data\Net\IIMDBRestApi.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Data\Entity\MovieSummaryEntity.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Data\Net\IMDBRestApiClient.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Data\Entity\SearchResultEntity.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Domain\Repository\IMovieRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Data\Repository\MovieRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Data\Repository\DataSource\IMovieDataStore.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Data\Repository\DataSource\MovieDataStoreFactory.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Data\Repository\DataSource\MovieCloudDataStore.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Data\Repository\DataSource\MovieDiskDataStore.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Data\Entity\Mapper\MovieSummaryMapper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Domain\DefaultObserver.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Domain\UseCase\BaseUseCase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Domain\UseCase\SearchMoviesUseCase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Domain\UseCase\GetMovieDetailUseCase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Presentation\Presenter\MoviePresenter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Presentation\BaseView.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)Data\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Domain\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Presentation\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Data\Cache\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Data\Entity\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Data\Entity\Mapper\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Domain\Model\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Data\Net\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Data\Repository\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Domain\Repository\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Data\Repository\DataSource\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Domain\UseCase\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Presentation\Presenter\" />
+  </ItemGroup>
+</Project>

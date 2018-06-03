@@ -59,7 +59,7 @@ namespace IMDBSearchApp
             });
         }
 
-        public async void OnSearchingMovieFailed(Exception error)
+        public void OnSearchingMovieFailed(Exception error)
         {
             Device.BeginInvokeOnMainThread(() =>
             {
@@ -67,11 +67,11 @@ namespace IMDBSearchApp
             });
         }
 
-        public async void OnNetworkDisabledError()
+        public void OnNetworkDisabledError()
         {
             Device.BeginInvokeOnMainThread(() =>
             {
-                await DisplayAlert("Error", "Something wrong in network", "OK");
+                DisplayAlert("Error", "Something wrong in network", "OK");
             });
         }
     }

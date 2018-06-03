@@ -8,15 +8,20 @@ namespace IMDBSearchApp.Presentation.Presenter
 {
     public class MovieDetailPresenter
     {
-        public BaseView<Movie> View { get; set; }
+        private IMovieDetailViewSurface View { get; set; }
 
         GetMovieDetailUseCase getMovieDetailUseCase = new GetMovieDetailUseCase();
+
+        public void OnInject(IMovieDetailViewSurface viewSurface)
+        {
+            View = viewSurface;
+        }
 
         public void GetMovieDetail(string imdbId)
         {
             getMovieDetailUseCase.Execute(new GetMovieDetailObserver { Presenter = this }, imdbId);
 
-            View.OnLoadingStart();
+            View.OnLoadingMovie();
         }
 
         class GetMovieDetailObserver : DefaultObserver<Movie>
@@ -37,15 +42,25 @@ namespace IMDBSearchApp.Presentation.Presenter
                 }
                 else
                 {
-                    Presenter.View.RenderError(error);
+                    Presenter.View.OnMovieLoadFailed(error);
                 }
             }
 
             public override void OnNext(Movie value)
             {
                 base.OnNext(value);
-                Presenter.View.Render(value);
+                Presenter.View.OnMovieLoaded(value);
             }
         }
+    }
+
+    public interface IMovieDetailViewSurface {
+        void OnLoadingMovie();
+
+        void OnMovieLoaded(Movie data);
+
+        void OnMovieLoadFailed(Exception error);
+
+        void OnNetworkDisabledError();
     }
 }

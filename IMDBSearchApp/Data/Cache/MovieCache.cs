@@ -14,15 +14,13 @@ namespace IMDBSearchApp.Data.Cache
 
         public static MovieCache mainCache => lazy.Value;
 
-        private Realm realm;
-
         private MovieCache()
         {
-            realm = Realm.GetInstance();    
         }
 
         public void ClearAll()
         {
+            var realm = Realm.GetInstance();
             using(var transaction = realm.BeginWrite())
             {
                 realm.RemoveAll<MovieSummaryEntity>();
@@ -49,6 +47,7 @@ namespace IMDBSearchApp.Data.Cache
 
         public List<MovieSummaryEntity> GetMoviesSummaryByKeyword(string keyword)
         {
+            var realm = Realm.GetInstance();
             var entities = realm.All<MovieSummaryEntity>()
                                 .Where(entity => entity.Title.Contains(keyword));
             return entities?.ToList<MovieSummaryEntity>();
@@ -56,6 +55,7 @@ namespace IMDBSearchApp.Data.Cache
 
         public void Put(MovieEntity entity)
         {
+            var realm = Realm.GetInstance();
             realm.Write(() => {
                 realm.Add(entity);
             });
@@ -63,6 +63,7 @@ namespace IMDBSearchApp.Data.Cache
 
         public void PutAll(List<MovieSummaryEntity> entities)
         {
+            var realm = Realm.GetInstance();
             using(var transaction = realm.BeginWrite())
             {
                 foreach(var entity in entities)
@@ -75,6 +76,7 @@ namespace IMDBSearchApp.Data.Cache
 
         public MovieEntity GetMovieById(string imdbId)
         {
+            var realm = Realm.GetInstance();
             var entity = realm.Find<MovieEntity>(imdbId);
             return entity;
         }

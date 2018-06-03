@@ -1,48 +1,78 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Collections.ObjectModel;
 using IMDBSearchApp.Domain.Model;
-using IMDBSearchApp.Presentation;
 using IMDBSearchApp.Presentation.Presenter;
 using Xamarin.Forms;
 
 namespace IMDBSearchApp
 {
-    public partial class MainPage : ContentPage, BaseView<Movie>
+    public partial class MainPage : ContentPage, IMovieSearchViewSurface, IMovieSearchRouterSurface
     {
-        //MovieSearchPresenter Presenter;
-        MovieDetailPresenter Presenter;
+        MovieSearchPresenter Presenter;
+
+        public ObservableCollection<MovieSummary> movies { get; set; }
 
         public MainPage()
         {
             InitializeComponent();
 
-            //Presenter = new MovieSearchPresenter { View = this };
-            //Presenter.SearchMovie("Avengers");
-            Presenter = new MovieDetailPresenter { View = this };
-            Presenter.GetMovieDetail("tt0848228");
+            Title = "IMDB Finder";
+
+            Presenter = new MovieSearchPresenter();
+            Presenter.OnInject(this, this);
+
+            movies = new ObservableCollection<MovieSummary>();
         }
 
-        public void OnLoadingStart()
+        void OnSearchBarButtonPressed(object sender, System.EventArgs e)
         {
-            
+            Presenter.SearchMovie(searchbar.Text);
         }
 
-        public void OnNetworkDisabledError()
+        void OnMovieItemTapped(object sender, Xamarin.Forms.ItemTappedEventArgs e)
         {
-            
+            Presenter.GotoMovieDetail(e.Item as MovieSummary);
         }
 
-        public void Render(Movie data)
+        public async void NavigateToMovieDetailAsync(MovieSummary movieSummary)
         {
-            
+            await Navigation.PushAsync(new MovieDetailPage(movieSummary));
         }
 
-        public void RenderError(Exception error)
+        public void OnSearchingMovie()
         {
-            
+        }
+
+        public void OnSearchingMovieSucceed(List<MovieSummary> data)
+        {
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                movies.Clear();
+                foreach (var summary in data)
+                {
+                    movies.Add(summary);
+                }
+
+                listView.ItemsSource = movies;
+                listView.IsRefreshing = false;
+            });
+        }
+
+        public async void OnSearchingMovieFailed(Exception error)
+        {
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                DisplayAlert("Error", error.InnerException.ToString(), "OK");
+            });
+        }
+
+        public async void OnNetworkDisabledError()
+        {
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                await DisplayAlert("Error", "Something wrong in network", "OK");
+            });
         }
     }
 }

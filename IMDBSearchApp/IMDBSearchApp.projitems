@@ -11,6 +11,10 @@
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)App.xaml" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)MainPage.xaml" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)MovieDetailPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
@@ -50,6 +54,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Presentation\Presenter\MovieSearchPresenter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Presentation\BaseView.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Presentation\Presenter\MovieDetailPresenter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MovieDetailPage.xaml.cs">
+      <DependentUpon>MovieDetailPage.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Data\" />

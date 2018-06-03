@@ -9,15 +9,27 @@ namespace IMDBSearchApp.Presentation.Presenter
 {
     public class MovieSearchPresenter
     {
-        public BaseView<List<MovieSummary>> View { get; set; }
+        private IMovieSearchViewSurface View { get; set; }
+        private IMovieSearchRouterSurface Router { get; set; }
 
         SearchMoviesUseCase searchMoviesUseCase = new SearchMoviesUseCase();
+
+        public void OnInject(IMovieSearchViewSurface viewSurface, IMovieSearchRouterSurface routerSurface)
+        {
+            View = viewSurface;
+            Router = routerSurface;
+        }
 
         public void SearchMovie(string keyword)
         {
             searchMoviesUseCase.Execute(new SearchMovieObserver { Presenter = this }, keyword);
 
-            View.OnLoadingStart();
+            View.OnSearchingMovie();
+        }
+
+        public void GotoMovieDetail(MovieSummary movieSummary)
+        {
+            Router.NavigateToMovieDetailAsync(movieSummary);
         }
 
         class SearchMovieObserver : DefaultObserver<List<MovieSummary>>
@@ -38,15 +50,31 @@ namespace IMDBSearchApp.Presentation.Presenter
                 }
                 else
                 {
-                    Presenter.View.RenderError(error);
+                    Presenter.View.OnSearchingMovieFailed(error);
                 }
             }
 
             public override void OnNext(List<MovieSummary> value)
             {
                 base.OnNext(value);
-                Presenter.View.Render(value);
+                Presenter.View.OnSearchingMovieSucceed(value);
             }
         }
+    }
+
+    public interface IMovieSearchViewSurface
+    {
+        void OnSearchingMovie();
+
+        void OnSearchingMovieSucceed(List<MovieSummary> data);
+
+        void OnSearchingMovieFailed(Exception error);
+
+        void OnNetworkDisabledError();
+    }
+
+    public interface IMovieSearchRouterSurface
+    {
+        void NavigateToMovieDetailAsync(MovieSummary movieSummary);
     }
 }

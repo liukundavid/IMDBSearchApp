@@ -12,7 +12,7 @@ namespace IMDBSearchApp.Domain.UseCase
 
         public override IObservable<List<MovieSummary>> CreateUseCaseObservable(string keyword)
         {
-            return repository.searchMoviesByKeyword(keyword);
+            return repository.SearchMoviesByKeyword(keyword);
         }
     }
 }

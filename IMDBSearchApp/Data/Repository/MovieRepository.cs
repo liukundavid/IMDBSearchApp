@@ -22,7 +22,7 @@ namespace IMDBSearchApp.Data.Repository
             return movie;
         }
 
-        public IObservable<List<MovieSummary>> searchMoviesByKeyword(string keyword)
+        public IObservable<List<MovieSummary>> SearchMoviesByKeyword(string keyword)
         {
             MovieSummaryMapper movieSummaryMapper = new MovieSummaryMapper();
             var hasCache = MovieCache.mainCache.hasMovieSummary(keyword);
